@@ -1,0 +1,54 @@
+:root{
+/* Primary — Navy (from logo) */
+--navy-50:#EEF3F8;--navy-100:#DCE8F1;--navy-200:#B9D0E3;--navy-300:#8FB0CC;--navy-400:#5F87AA;
+--navy-500:#2F5B85;--navy-600:#1D4166;--navy-700:#14325A;--navy-800:#0F2544;--navy-900:#0A192F;
+/* Accent — Orange (from logo) */
+--orange-50:#FFF6EA;--orange-100:#FFE9CC;--orange-200:#FFD199;--orange-300:#FFB966;--orange-400:#FCA33D;
+--orange-500:#F0901E;--orange-600:#D97812;--orange-700:#B35F0C;--orange-800:#8C4A0A;--orange-900:#663507;
+/* Tertiary — Tan/Brown (from logo) */
+--tan-50:#FAF3EA;--tan-100:#F0E1CB;--tan-200:#DFC297;--tan-300:#CBA26A;--tan-400:#B8873F;
+--tan-500:#A66F35;--tan-600:#8A5A2A;--tan-700:#6E4720;--tan-800:#523517;--tan-900:#38240F;
+/* Neutral — cool gray (navy-tinted) */
+--gray-50:#F7F8FA;--gray-100:#EEF1F4;--gray-200:#DFE4E9;--gray-300:#C7CFD8;--gray-400:#A3AEBB;
+--gray-500:#7C8797;--gray-600:#5D6675;--gray-700:#454C59;--gray-800:#2E333D;--gray-900:#1A1D23;--gray-950:#0F1115;
+/* Semantic */
+--green-500:#1E8E5A;--green-100:#E4F5EC;--green-700:#186E46;
+--amber-500:#C77D0A;--amber-100:#FBEEDA;--amber-700:#8F5A06;
+--red-500:#DC2626;--red-100:#FBE7E7;--red-700:#A31D1D;
+--white:#FFFFFF;
+
+/* Semantic aliases — surfaces */
+--surface-page:var(--gray-50);
+--surface-card:var(--white);
+--surface-sunken:var(--gray-100);
+--surface-inverse:var(--navy-800);
+--surface-brand:var(--navy-700);
+--surface-brand-hover:var(--navy-800);
+--surface-accent:var(--orange-500);
+--surface-accent-hover:var(--orange-600);
+
+/* Semantic aliases — text */
+--text-primary:var(--gray-900);
+--text-secondary:var(--gray-600);
+--text-muted:var(--gray-500);
+--text-inverse:var(--white);
+--text-brand:var(--navy-700);
+--text-accent:var(--orange-600);
+--text-link:var(--navy-600);
+--text-link-hover:var(--navy-700);
+
+/* Semantic aliases — borders */
+--border:var(--gray-200);
+--border-strong:var(--gray-300);
+--border-focus:var(--navy-500);
+
+/* Semantic aliases — state */
+--state-success:var(--green-500);
+--state-success-bg:var(--green-100);
+--state-warning:var(--amber-500);
+--state-warning-bg:var(--amber-100);
+--state-error:var(--red-500);
+--state-error-bg:var(--red-100);
+--state-info:var(--navy-500);
+--state-info-bg:var(--navy-50);
+}
