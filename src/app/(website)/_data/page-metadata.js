@@ -36,4 +36,8 @@ export const pageMetadata = {
     title: 'FAQ',
     description: 'Everything you need to know about our courses, consultancy, and automation services — organized by topic.',
   },
+  articles: {
+    title: 'Articles & Insights',
+    description: "Notes from our consultants, trainers, and automation team on what's actually working — skill development, consultancy, automation, and company news.",
+  },
 };
