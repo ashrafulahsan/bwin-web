@@ -40,4 +40,16 @@ export const pageMetadata = {
     title: 'Articles & Insights',
     description: "Notes from our consultants, trainers, and automation team on what's actually working — skill development, consultancy, automation, and company news.",
   },
+  privacyPolicy: {
+    title: 'Privacy Policy',
+    description: 'How BWIN Consultants collects, uses, and protects your information across courses, consultancy, and automation services.',
+  },
+  refundPolicy: {
+    title: 'Refund Policy',
+    description: 'Refund terms for skill development courses, consultancy services, business automation, and bundle plans.',
+  },
+  termsConditions: {
+    title: 'Terms and Conditions',
+    description: 'The terms that apply when you enroll in a course, book a consultancy session, or commission automation work with BWIN Consultants.',
+  },
 };

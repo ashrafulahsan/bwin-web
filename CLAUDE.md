@@ -148,7 +148,11 @@ These are the conventions already in use — follow them rather than inventing n
    need `'use client'` for interactivity, the standard shape is: `page.jsx` stays a thin Server Component
    (`export const metadata = buildMetadata(...)`, renders one content component), and the actual UI lives in a
    `'use client'` component in `_components/` (e.g. `ConsultancyPageContent.jsx`, `LoginSignupContent.jsx`).
-   Follow this split for every new page. `src/app/sitemap.js` and `src/app/robots.js` are auto-derived from
+   Follow this split for every new page **that has any interactivity at all** (hooks, event handlers, forms).
+   If a page is 100% static (no `useState`/`onClick`/etc. anywhere — e.g. the legal pages), skip the split:
+   just export `metadata` directly from a plain Server Component `page.jsx` with no `'use client'` anywhere in
+   its tree. Don't add the split preemptively "for consistency" — it means shipping unnecessary client JS.
+   `src/app/sitemap.js` and `src/app/robots.js` are auto-derived from
    `pageMetadata`'s keys, so a route appears in the sitemap automatically the moment its `pageMetadata` entry
    is added — no separate list to maintain.
 8. **Excluded on purpose**: the prototype's `image-slot.js`, `tweaks-panel.jsx`, `site-tweaks.jsx`,
@@ -224,6 +228,19 @@ Skill Development / Consultancy / Automation / Company News). Data in `_data/art
 Already linked from the footer's Company column ("Articles", wired to `routes.articles` since the original
 Footer port).
 
+**`/privacy-policy`, `/refund-policy`, `/terms-conditions` — done.** The prototype had each legal page
+redeclare its own copy of `LegalLayout`/`LegalSection` (or rely on `page-legal-shared.jsx` loading first in
+the browser-global-script model) — ported here as one real shared `_components/LegalLayout.jsx` (a Server
+Component: title/breadcrumb banner + a `sections` list, no interactivity, so no `'use client'` needed at all).
+Content lives in `_data/legal-content.js` as **plain strings** (`privacyPolicyContent`, `refundPolicyContent`,
+`termsConditionsContent`), deliberately not JSX — a real backend will return plain text, not React elements.
+The one place the prototype had an inline `mailto:` link (privacy policy's "Your rights" section) is handled
+generically by a new `src/utils/linkifyEmail.jsx` helper that auto-links any occurrence of the site email
+inside a paragraph — so the data stays pure text while the rendered link still works. All three page.jsx files
+are plain Server Components (no client content-component split — see the exception noted in "Working
+patterns" below). Already linked from the footer's Company column (all three were wired since the original
+Footer port).
+
 **Known issue — duplicate content at `/consultancy` and `/free-consultation`.** Both routes currently render
 the exact same `ConsultancyPageContent` (free-consultation-page.html's content, ported at the user's explicit
 request onto the nav's "Consultancy" link). A second copy was then created directly at `/free-consultation`
@@ -235,8 +252,8 @@ resolved. Don't silently delete either route; ask first.
 **Pending** (in this order):
 1. The remaining website pages — each prototype `page-*.jsx` maps 1:1 to an `app/(website)/<route>/page.jsx`
    folder that already exists (empty) — see the folder tree above for the full list. (`about-us`,
-   `contact-us`, `teams`, `faq`, `articles`, `login-signup`, `consultancy`/`free-consultation` are done, see
-   above.)
+   `contact-us`, `teams`, `faq`, `articles`, `privacy-policy`, `refund-policy`, `terms-conditions`,
+   `login-signup`, `consultancy`/`free-consultation` are done, see above.)
 2. `course-data.js` / `course-registry.js` → ES modules in `app/(website)/_data/`, rewiring
    `page-course-details.jsx`'s `window.ALL_SITE_COURSES` / `window.CourseData` reads to real imports.
 3. `(dashboard)` placeholder page + a pass-through `src/middleware.js`.
