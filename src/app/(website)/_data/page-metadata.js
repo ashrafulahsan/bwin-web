@@ -32,4 +32,8 @@ export const pageMetadata = {
     title: 'Teams',
     description: 'Leadership, consultants, and trainers who bring decades of combined experience to every course, engagement, and build. Meet the people behind every result.',
   },
+  faq: {
+    title: 'FAQ',
+    description: 'Everything you need to know about our courses, consultancy, and automation services — organized by topic.',
+  },
 };
