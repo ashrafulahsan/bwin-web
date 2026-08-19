@@ -5,6 +5,11 @@ import { BusinessAutomationSection } from './_components/BusinessAutomationSecti
 import { WhyChooseUsSection } from './_components/WhyChooseUsSection';
 import { TestimonialsSection } from './_components/TestimonialsSection';
 import { FaqSection } from './_components/FaqSection';
+import { buildMetadata } from '@/lib/seo';
+import { routes } from '@/config/site.config';
+import { pageMetadata } from './_data/page-metadata';
+
+export const metadata = buildMetadata({ ...pageMetadata.home, path: routes.home });
 
 export default function HomePage() {
   return (

@@ -1,8 +1,20 @@
 import '@/styles/globals.css';
+import { SITE_URL, SITE_NAME } from '@/lib/seo';
 
 export const metadata = {
-  title: 'BWIN Consultants',
-  description: 'Skill development, consultancy, and business automation.',
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: 'BWIN Consultants — Skill Development, Consultancy & Business Automation',
+    template: '%s | BWIN Consultants',
+  },
+  description: 'BWIN Consultants helps individuals build in-demand skills and helps businesses run better — through hands-on training, practical consultancy, and automation that removes the busywork from daily operations.',
+  openGraph: {
+    siteName: SITE_NAME,
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+  },
 };
 
 const THEME_INIT_SCRIPT = `

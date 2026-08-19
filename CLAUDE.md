@@ -129,7 +129,25 @@ These are the conventions already in use — follow them rather than inventing n
    exported as a plain constant, with a one-line comment naming the future API endpoint and the exact shape
    the component expects. The component imports the constant — nothing else changes. This is the seam where a
    real backend call replaces static data later, so don't skip it even for small lists.
-7. **Excluded on purpose**: the prototype's `image-slot.js`, `tweaks-panel.jsx`, `site-tweaks.jsx`,
+7. **SEO metadata**: every page must export Next.js `metadata` built via `buildMetadata()` from
+   `src/lib/seo.js`, fed by an entry in `app/(website)/_data/page-metadata.js` keyed by the same name as its
+   `routes.*` entry (e.g. `pageMetadata.consultancy` + `routes.consultancy`). `buildMetadata()` fills in
+   canonical URL, OpenGraph, Twitter card, and robots consistently — pages only supply `{ title?, description }`.
+   Root layout sets a `title.template` (`'%s | BWIN Consultants'`) and a `default` title; the **home page is
+   the only page that omits `title`** in its `pageMetadata` entry, so it inherits the root's `default` verbatim.
+   **Critical gotcha already hit once**: `buildMetadata()` must never include a `title` key with value
+   `undefined` — Next.js treats an explicit `title: undefined` as "this segment sets an empty title" and the
+   `<title>` tag disappears entirely, it does **not** fall back to the parent's default. The key must be
+   omitted outright when there's no title (see the `titleField` conditional-spread in `lib/seo.js`) — don't
+   "simplify" that back to a bare `title,` shorthand.
+   Because `metadata`/`generateMetadata` exports are only legal in Server Components, and most of these pages
+   need `'use client'` for interactivity, the standard shape is: `page.jsx` stays a thin Server Component
+   (`export const metadata = buildMetadata(...)`, renders one content component), and the actual UI lives in a
+   `'use client'` component in `_components/` (e.g. `ConsultancyPageContent.jsx`, `LoginSignupContent.jsx`).
+   Follow this split for every new page. `src/app/sitemap.js` and `src/app/robots.js` are auto-derived from
+   `pageMetadata`'s keys, so a route appears in the sitemap automatically the moment its `pageMetadata` entry
+   is added — no separate list to maintain.
+8. **Excluded on purpose**: the prototype's `image-slot.js`, `tweaks-panel.jsx`, `site-tweaks.jsx`,
    `support.js`, `.image-slots.state.json`, `.thumbnail`, `screenshots/`, `_ds_manifest.json`,
    `_adherence.oxlintrc.json`, and the `ui_kits/client-portal/App.jsx` demo inside the design-system bundle are
    all Claude Design editor tooling or unused demo code — never port these.
@@ -164,6 +182,14 @@ is a tab toggle within the single page, matching the prototype exactly. The head
 `/forgot-password/` folders from the original skeleton were left in place but are **not currently used** —
 only recreate that split if explicitly asked for again (e.g. for a future dashboard/admin login with different
 chrome).
+
+**Known issue — duplicate content at `/consultancy` and `/free-consultation`.** Both routes currently render
+the exact same `ConsultancyPageContent` (free-consultation-page.html's content, ported at the user's explicit
+request onto the nav's "Consultancy" link). A second copy was then created directly at `/free-consultation`
+outside this session and the header's mega-menu "Consultancy" column was repointed there. Both pages now have
+correct, distinct SEO metadata (so at least the canonical/OG tags don't collide), but having two live URLs
+with identical body content is still a real duplicate-content SEO issue — flagged to the user, not yet
+resolved. Don't silently delete either route; ask first.
 
 **Pending** (in this order):
 1. The remaining website pages — each prototype `page-*.jsx` maps 1:1 to an `app/(website)/<route>/page.jsx`
