@@ -1,6 +1,7 @@
 import { Hero } from './_components/Hero';
 import { SkillDevelopmentSection } from './_components/SkillDevelopmentSection';
 import { ConsultancyServiceSection } from './_components/ConsultancyServiceSection';
+import { BusinessAutomationSection } from './_components/BusinessAutomationSection';
 
 export default function HomePage() {
   return (
@@ -8,6 +9,7 @@ export default function HomePage() {
       <Hero />
       <SkillDevelopmentSection />
       <ConsultancyServiceSection />
+      <BusinessAutomationSection />
     </>
   );
 }
