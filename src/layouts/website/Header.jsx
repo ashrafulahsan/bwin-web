@@ -22,7 +22,7 @@ const servicesMenu = [
       { label: 'University Admission Test', href: `${routes.skillDevelopment}?category=${encodeURIComponent('University Admission Test')}` },
     ],
   },
-  { title: 'Consultancy', icon: 'briefcase', tint: 'orange', href: routes.consultancy, items: ['Business strategy', 'Financial advisory', 'HR & talent consulting'] },
+  { title: 'Consultancy', icon: 'briefcase', tint: 'orange', href: routes.freeConsultation, items: ['Business strategy', 'Financial advisory', 'HR & talent consulting'] },
   { title: 'Business automation', icon: 'cog-6-tooth', tint: 'tan', href: routes.businessAutomation, items: ['Workflow automation', 'CRM integration', 'Custom chatbots & bots'] },
 ];
 
@@ -34,10 +34,10 @@ function MegaMenu({ open }) {
         <div className="mega-cols">
           {servicesMenu.map((col) => (
             <div className="mega-col" key={col.title}>
-              <div className={'mega-col-head tint-' + col.tint}>
+              <Link href={col.href} className={'mega-col-head tint-' + col.tint}>
                 <span className="mega-col-icon"><Icon name={col.icon} size={22} /></span>
                 <span className="mega-col-title">{col.title}</span>
-              </div>
+              </Link>
               <ul>
                 {col.items.map((it) => {
                   const label = typeof it === 'string' ? it : it.label;
