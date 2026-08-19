@@ -3,6 +3,7 @@ import { SkillDevelopmentSection } from './_components/SkillDevelopmentSection';
 import { ConsultancyServiceSection } from './_components/ConsultancyServiceSection';
 import { BusinessAutomationSection } from './_components/BusinessAutomationSection';
 import { WhyChooseUsSection } from './_components/WhyChooseUsSection';
+import { TestimonialsSection } from './_components/TestimonialsSection';
 
 export default function HomePage() {
   return (
@@ -12,6 +13,7 @@ export default function HomePage() {
       <ConsultancyServiceSection />
       <BusinessAutomationSection />
       <WhyChooseUsSection />
+      <TestimonialsSection />
     </>
   );
 }
