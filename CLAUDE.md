@@ -124,7 +124,12 @@ These are the conventions already in use — follow them rather than inventing n
      from `.foo image-slot{...}` to `.foo img{...}` (already done for every selector ported so far).
 5. **CSS**: don't touch the token values or class names — they're copied verbatim from the prototype for
    pixel parity. Dark mode is driven by `[data-theme="dark"]` on `<html>`, toggled by `useTheme()`.
-6. **Excluded on purpose**: the prototype's `image-slot.js`, `tweaks-panel.jsx`, `site-tweaks.jsx`,
+6. **Section data**: any homepage/section content that's currently hardcoded arrays in the prototype (course
+   lists, stats, testimonials, FAQ items, etc.) gets extracted into its own file in `app/(website)/_data/`,
+   exported as a plain constant, with a one-line comment naming the future API endpoint and the exact shape
+   the component expects. The component imports the constant — nothing else changes. This is the seam where a
+   real backend call replaces static data later, so don't skip it even for small lists.
+7. **Excluded on purpose**: the prototype's `image-slot.js`, `tweaks-panel.jsx`, `site-tweaks.jsx`,
    `support.js`, `.image-slots.state.json`, `.thumbnail`, `screenshots/`, `_ds_manifest.json`,
    `_adherence.oxlintrc.json`, and the `ui_kits/client-portal/App.jsx` demo inside the design-system bundle are
    all Claude Design editor tooling or unused demo code — never port these.
@@ -136,21 +141,32 @@ These are the conventions already in use — follow them rather than inventing n
 `public/uploads` copied over, `Header`/`Footer`/`WebsiteLayout` fully ported and verified working in-browser
 (mega menus, mobile drawer, dark-mode toggle, all links resolve via `routes`).
 
+**Home page composition — done.** `app/(website)/page.jsx` renders, in order: `Hero`, `SkillDevelopmentSection`,
+`ConsultancyServiceSection`, `BusinessAutomationSection`, `WhyChooseUsSection`, `TestimonialsSection`
+(prototype's `ReviewSlider`), `FaqSection` — matching the prototype's mount order in
+`BWIN Home Page (Standalone).html` exactly. Each section's data is a plain export in
+`app/(website)/_data/*.js` (`skill-development-tabs.js`, `consultancy-services.js`,
+`business-automation-cards.js`, `why-choose-us-stats.js`, `testimonial-categories.js`, `faq-items.js`), each
+with a comment marking where a real API call replaces the static export later — see "Working patterns" below.
+Two dead-code paths from the prototype were intentionally **not** ported: `hero.jsx`'s `ServiceShowcase` and
+`header.jsx`'s `LangSwitch` were both defined but never actually rendered anywhere in the source — confirmed
+by grepping the whole prototype before dropping them. `promo-popup.jsx` has not been ported yet (not part of
+the main section flow — revisit if/when needed). New shared util added: `src/utils/slugify.js` (needed by
+course card links; will also be needed by the course-details page).
+
 **Pending** (in this order):
-1. Home page composition — port `hero.jsx`, `skill-development.jsx`, `consultancy-service.jsx`,
-   `business-automation.jsx`, `why-choose-us.jsx`, `review-section.jsx`, `faq-section.jsx`, `promo-popup.jsx`
-   from the prototype into `app/(website)/_components/`, replace the current placeholder `page.jsx`.
-2. The other 19 website pages — each prototype `page-*.jsx` maps 1:1 to an `app/(website)/<route>/page.jsx`
-   folder that already exists (empty) — see the folder tree above for the full list.
-3. `course-data.js` / `course-registry.js` → ES modules in `app/(website)/_data/`, rewiring
+1. The 19 remaining website pages — each prototype `page-*.jsx` maps 1:1 to an
+   `app/(website)/<route>/page.jsx` folder that already exists (empty) — see the folder tree above for the
+   full list.
+2. `course-data.js` / `course-registry.js` → ES modules in `app/(website)/_data/`, rewiring
    `page-course-details.jsx`'s `window.ALL_SITE_COURSES` / `window.CourseData` reads to real imports.
-4. `(auth)` pages: split the prototype's combined `page-login-signup.jsx` into `login/` and `register/`, plus a
+3. `(auth)` pages: split the prototype's combined `page-login-signup.jsx` into `login/` and `register/`, plus a
    new `forgot-password/` page built to match the visual style (no prototype source for this one).
-5. `(dashboard)` placeholder page + a pass-through `src/middleware.js`.
-6. Supporting infra: `lib/axios.js`, `context/AppProviders.jsx` (TanStack `QueryClientProvider`),
+4. `(dashboard)` placeholder page + a pass-through `src/middleware.js`.
+5. Supporting infra: `lib/axios.js`, `context/AppProviders.jsx` (TanStack `QueryClientProvider`),
    `i18n/request.js` + `messages/en.json` (English-only for now — BN translation and locale-prefixed routing
    are explicitly out of scope until asked for).
-7. Final cleanup pass: grep for any leftover `window.BWINConsultantsDesignSystem_57d974`,
+6. Final cleanup pass: grep for any leftover `window.BWINConsultantsDesignSystem_57d974`,
    `window.ALL_SITE_COURSES`, or `<image-slot>` references.
 
 ## Running it

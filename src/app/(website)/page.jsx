@@ -4,6 +4,7 @@ import { ConsultancyServiceSection } from './_components/ConsultancyServiceSecti
 import { BusinessAutomationSection } from './_components/BusinessAutomationSection';
 import { WhyChooseUsSection } from './_components/WhyChooseUsSection';
 import { TestimonialsSection } from './_components/TestimonialsSection';
+import { FaqSection } from './_components/FaqSection';
 
 export default function HomePage() {
   return (
@@ -14,6 +15,7 @@ export default function HomePage() {
       <BusinessAutomationSection />
       <WhyChooseUsSection />
       <TestimonialsSection />
+      <FaqSection />
     </>
   );
 }
