@@ -24,4 +24,8 @@ export const pageMetadata = {
     title: 'About Us',
     description: 'BWIN Consultants was built on a simple idea — that training, advisory, and automation work best when they come from one team that understands the whole business. Meet the team and see our track record.',
   },
+  contactUs: {
+    title: 'Contact Us',
+    description: "Whether it's a course, a consultation, or an automation project — reach out and we'll get back within one business day. Office address, phone, email, and office hours.",
+  },
 };

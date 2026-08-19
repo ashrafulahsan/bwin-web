@@ -40,5 +40,5 @@ See [`CLAUDE.md`](./CLAUDE.md) for the full folder tree and working conventions.
 
 ## Pages built so far
 
-Home (`/`), About Us, Consultancy, Free Consultation, Login/Signup — see `CLAUDE.md`'s "Migration status"
+Home (`/`), About Us, Contact Us, Consultancy, Free Consultation, Login/Signup — see `CLAUDE.md`'s "Migration status"
 section for what's done and what's still pending across the ~20-page site.

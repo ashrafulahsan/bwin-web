@@ -197,6 +197,13 @@ both `Hero.jsx` and this page in the prototype, so it's now a single shared file
 existing "More" mega-menu ("About us" in the Company column) — that link was wired to `routes.aboutUs` from
 the very first Header port, it just 404'd until this page existed.
 
+**`/contact-us` — done.** Ported from `page-contact-us.jsx` verbatim (contact form, office info card, office
+hours list, WhatsApp CTA, map placeholder, and its own FAQ section reusing `FaqSection` with
+`contactUsFaq` items). Office hours + FAQ data live in `_data/contact-us-content.js`. The map image-slot has
+no real asset (same as every other generic placeholder decision) so it's `ImagePlaceholder`. Already linked
+from the header's "More" mega-menu ("Contact us" in the Company column, wired to `routes.contactUs` since the
+original Header port).
+
 **Known issue — duplicate content at `/consultancy` and `/free-consultation`.** Both routes currently render
 the exact same `ConsultancyPageContent` (free-consultation-page.html's content, ported at the user's explicit
 request onto the nav's "Consultancy" link). A second copy was then created directly at `/free-consultation`
@@ -208,7 +215,7 @@ resolved. Don't silently delete either route; ask first.
 **Pending** (in this order):
 1. The remaining website pages — each prototype `page-*.jsx` maps 1:1 to an `app/(website)/<route>/page.jsx`
    folder that already exists (empty) — see the folder tree above for the full list. (`about-us`,
-   `login-signup`, `consultancy`/`free-consultation` are done, see above.)
+   `contact-us`, `login-signup`, `consultancy`/`free-consultation` are done, see above.)
 2. `course-data.js` / `course-registry.js` → ES modules in `app/(website)/_data/`, rewiring
    `page-course-details.jsx`'s `window.ALL_SITE_COURSES` / `window.CourseData` reads to real imports.
 3. `(dashboard)` placeholder page + a pass-through `src/middleware.js`.
