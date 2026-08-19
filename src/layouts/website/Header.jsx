@@ -267,7 +267,7 @@ export function Header() {
           <div className="header-actions">
             <SearchBox />
             <ThemeToggle />
-            <Button variant="secondary" size="md" onClick={() => router.push(routes.login)}>Login / Signup</Button>
+            <Button variant="secondary" size="md" onClick={() => router.push(routes.loginSignup)}>Login / Signup</Button>
             <Button variant="primary" size="md" onClick={() => router.push(routes.freeConsultation)}>Consultation</Button>
           </div>
 
@@ -309,7 +309,7 @@ export function Header() {
             </div>
             <div className="mobile-drawer-divider"></div>
             <ThemeToggle />
-            <Button variant="secondary" size="md" onClick={() => router.push(routes.login)}>Login / Signup</Button>
+            <Button variant="secondary" size="md" onClick={() => router.push(routes.loginSignup)}>Login / Signup</Button>
             <Button variant="primary" size="md" onClick={() => router.push(routes.freeConsultation)}>Free Consultation</Button>
           </div>
         </div>

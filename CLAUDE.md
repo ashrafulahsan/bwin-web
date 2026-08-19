@@ -154,19 +154,28 @@ by grepping the whole prototype before dropping them. `promo-popup.jsx` has not 
 the main section flow — revisit if/when needed). New shared util added: `src/utils/slugify.js` (needed by
 course card links; will also be needed by the course-details page).
 
+**`/login-signup` — done, plan deviation.** The original plan called for splitting the prototype's combined
+`page-login-signup.jsx` into three separate `(auth)/login`, `/register`, `/forgot-password` routes behind a
+stripped-down (no header/footer) auth layout. The user explicitly asked instead for **one combined page with
+the normal site header/footer** — so it's built as `app/(website)/login-signup/page.jsx` (route `/login-signup`,
+`routes.loginSignup` in `site.config.js`), reusing `WebsiteLayout` like every other page. Login/Create-account
+is a tab toggle within the single page, matching the prototype exactly. The header's "Login / Signup" button
+(desktop + mobile drawer) now points at `routes.loginSignup`. The empty `app/(auth)/login/`, `/register/`,
+`/forgot-password/` folders from the original skeleton were left in place but are **not currently used** —
+only recreate that split if explicitly asked for again (e.g. for a future dashboard/admin login with different
+chrome).
+
 **Pending** (in this order):
-1. The 19 remaining website pages — each prototype `page-*.jsx` maps 1:1 to an
-   `app/(website)/<route>/page.jsx` folder that already exists (empty) — see the folder tree above for the
-   full list.
+1. The remaining website pages — each prototype `page-*.jsx` maps 1:1 to an `app/(website)/<route>/page.jsx`
+   folder that already exists (empty) — see the folder tree above for the full list. (`login-signup` is done,
+   see above.)
 2. `course-data.js` / `course-registry.js` → ES modules in `app/(website)/_data/`, rewiring
    `page-course-details.jsx`'s `window.ALL_SITE_COURSES` / `window.CourseData` reads to real imports.
-3. `(auth)` pages: split the prototype's combined `page-login-signup.jsx` into `login/` and `register/`, plus a
-   new `forgot-password/` page built to match the visual style (no prototype source for this one).
-4. `(dashboard)` placeholder page + a pass-through `src/middleware.js`.
-5. Supporting infra: `lib/axios.js`, `context/AppProviders.jsx` (TanStack `QueryClientProvider`),
+3. `(dashboard)` placeholder page + a pass-through `src/middleware.js`.
+4. Supporting infra: `lib/axios.js`, `context/AppProviders.jsx` (TanStack `QueryClientProvider`),
    `i18n/request.js` + `messages/en.json` (English-only for now — BN translation and locale-prefixed routing
    are explicitly out of scope until asked for).
-6. Final cleanup pass: grep for any leftover `window.BWINConsultantsDesignSystem_57d974`,
+5. Final cleanup pass: grep for any leftover `window.BWINConsultantsDesignSystem_57d974`,
    `window.ALL_SITE_COURSES`, or `<image-slot>` references.
 
 ## Running it
