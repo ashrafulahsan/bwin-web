@@ -5,14 +5,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { Button, Icon } from '@/components/ui';
 import { routes } from '@/config/site.config';
-
-const partners = [
-  { name: 'OTHM Qualifications — United Kingdom', src: '/assets/partners/othm.png' },
-  { name: 'ASCM — Authorized APICS Training Partner, USA', src: '/assets/partners/ascm.png' },
-  { name: 'PMI Authorized Training Partner — USA', src: '/assets/partners/pmi.png' },
-  { name: 'AOSH — United Kingdom', src: '/assets/partners/aosh.png' },
-  { name: 'Cisco — USA', src: '/assets/partners/cisco.png' },
-];
+import { accreditationPartners } from '../_data/accreditation-partners';
 
 function HeroVisual() {
   const ref = useRef(null);
@@ -92,7 +85,7 @@ export function Hero() {
         <div className="hero-partners">
           <div className="hero-partners-title">Accreditation partner</div>
           <div className="hero-partners-row">
-            {partners.map((p) => (
+            {accreditationPartners.map((p) => (
               <img key={p.name} src={p.src} alt={p.name} className="partner-logo" />
             ))}
           </div>

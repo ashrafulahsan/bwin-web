@@ -1,36 +1,44 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# BWIN Consultants — Frontend
 
-## Getting Started
+The public website (and future CMS/LMS client app) for BWIN Consultants, built with Next.js. This is a real
+implementation migrated page-by-page from a Claude Design prototype into the architecture defined for this
+product — see [`CLAUDE.md`](./CLAUDE.md) for full context on the source material, folder structure, and the
+conventions every page follows (routing, SEO metadata, data-swap pattern, image handling, etc.).
 
-First, run the development server:
+## Tech stack
+
+Next.js 16 (App Router, Turbopack) · React 19 · JavaScript · Tailwind CSS v4 · Axios · TanStack Query ·
+Zustand · React Hook Form · Zod · next-intl.
+
+## Getting started
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+`next.config.mjs` pins `turbopack.root` explicitly — the parent `Main Code/` directory has an unrelated stray
+`package.json` that Next would otherwise misdetect as the workspace root.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Project structure
 
-## Learn More
+See [`CLAUDE.md`](./CLAUDE.md) for the full folder tree and working conventions. Short version:
 
-To learn more about Next.js, take a look at the following resources:
+- `src/app/(website)/` — the public site. Each route folder has a thin `page.jsx` (Server Component, owns
+  `metadata`) rendering a `'use client'` content component from `_components/`. Content that will eventually
+  come from a database lives in `_data/*.js`, one file per section/page, each with a comment marking the
+  future API call.
+- `src/components/ui/` — the design system's primitives (Button, Icon, Card, etc.), ported from the prototype.
+- `src/layouts/website/` — Header, Footer, and the layout that wraps every `(website)` page.
+- `src/lib/seo.js` — `buildMetadata()`, used by every page for consistent title/description/OpenGraph/Twitter/
+  canonical/robots tags. `src/app/sitemap.js` and `src/app/robots.js` are auto-derived from the same page
+  metadata list, so a new page appears in the sitemap the moment it's built.
+- `src/config/site.config.js` — the single source of truth for site info (name, contact, socials) and every
+  internal route path (`routes.aboutUs`, `routes.consultancy`, etc.) — never hardcode a path elsewhere.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Pages built so far
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Home (`/`), About Us, Consultancy, Free Consultation, Login/Signup — see `CLAUDE.md`'s "Migration status"
+section for what's done and what's still pending across the ~20-page site.

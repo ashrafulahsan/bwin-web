@@ -79,7 +79,8 @@ bwin_fe/
 │   │   ├── Footer.jsx                # newsletter, contact strip, link columns, social/payment strip
 │   │   └── WebsiteLayout.jsx         # composes Header + children + Footer
 │   ├── middleware/                   # empty — guard helpers land here once auth is real
-│   ├── lib/                          # empty — Axios instance/constants land here when first needed
+│   ├── lib/
+│   │   └── seo.js                    # buildMetadata() — every page's `metadata` export goes through this
 │   ├── config/
 │   │   └── site.config.js            # siteConfig (name/logo/phone/email/address/social) + routes map —
 │   │                                 # the single source of truth for every internal href in the app
@@ -91,8 +92,11 @@ bwin_fe/
 │   │   ├── header-footer.css         # site chrome + hero + homepage section styles
 │   │   ├── pages.css                 # per-page styles (course details, job success, contact, auth, etc.)
 │   │   └── globals.css               # Tailwind import + Google Fonts import + all of the above, in order
-│   └── utils/                        # empty on purpose, not needed yet
+│   └── utils/
+│       └── slugify.js                # used by course card links
 │
+├── src/app/sitemap.js     # auto-derived from page-metadata.js's keys — see "SEO metadata" pattern below
+├── src/app/robots.js      # points at /sitemap.xml
 ├── next.config.mjs        # sets turbopack.root (needed because Main Code/ has an unrelated stray package.json)
 └── package.json
 ```
@@ -183,6 +187,16 @@ is a tab toggle within the single page, matching the prototype exactly. The head
 only recreate that split if explicitly asked for again (e.g. for a future dashboard/admin login with different
 chrome).
 
+**`/about-us` — done.** Ported from `page-about-us.jsx` verbatim (story section, milestones, leadership team
+grid, accreditation partners, CTA band). Follows the standard Server-wrapper (`page.jsx`, owns `metadata`) +
+`'use client'` content (`_components/AboutUsPageContent.jsx`) split. Team photos and the "team at work" story
+image use `ImagePlaceholder` (no real photos exist for these in the prototype, confirmed the same way as
+every other placeholder decision — see "Images" below). The accreditation-partners list was duplicated in
+both `Hero.jsx` and this page in the prototype, so it's now a single shared file,
+`app/(website)/_data/accreditation-partners.js` — both consumers import it. Already linked from the header's
+existing "More" mega-menu ("About us" in the Company column) — that link was wired to `routes.aboutUs` from
+the very first Header port, it just 404'd until this page existed.
+
 **Known issue — duplicate content at `/consultancy` and `/free-consultation`.** Both routes currently render
 the exact same `ConsultancyPageContent` (free-consultation-page.html's content, ported at the user's explicit
 request onto the nav's "Consultancy" link). A second copy was then created directly at `/free-consultation`
@@ -193,8 +207,8 @@ resolved. Don't silently delete either route; ask first.
 
 **Pending** (in this order):
 1. The remaining website pages — each prototype `page-*.jsx` maps 1:1 to an `app/(website)/<route>/page.jsx`
-   folder that already exists (empty) — see the folder tree above for the full list. (`login-signup` is done,
-   see above.)
+   folder that already exists (empty) — see the folder tree above for the full list. (`about-us`,
+   `login-signup`, `consultancy`/`free-consultation` are done, see above.)
 2. `course-data.js` / `course-registry.js` → ES modules in `app/(website)/_data/`, rewiring
    `page-course-details.jsx`'s `window.ALL_SITE_COURSES` / `window.CourseData` reads to real imports.
 3. `(dashboard)` placeholder page + a pass-through `src/middleware.js`.

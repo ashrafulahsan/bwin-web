@@ -20,4 +20,8 @@ export const pageMetadata = {
     title: 'Login / Signup',
     description: 'Log in to your BWIN Consultants account or create a new one to start learning, book a consultation, or manage your automation projects.',
   },
+  aboutUs: {
+    title: 'About Us',
+    description: 'BWIN Consultants was built on a simple idea — that training, advisory, and automation work best when they come from one team that understands the whole business. Meet the team and see our track record.',
+  },
 };
