@@ -28,4 +28,8 @@ export const pageMetadata = {
     title: 'Contact Us',
     description: "Whether it's a course, a consultation, or an automation project — reach out and we'll get back within one business day. Office address, phone, email, and office hours.",
   },
+  teams: {
+    title: 'Teams',
+    description: 'Leadership, consultants, and trainers who bring decades of combined experience to every course, engagement, and build. Meet the people behind every result.',
+  },
 };

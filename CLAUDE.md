@@ -204,6 +204,13 @@ no real asset (same as every other generic placeholder decision) so it's `ImageP
 from the header's "More" mega-menu ("Contact us" in the Company column, wired to `routes.contactUs` since the
 original Header port).
 
+**`/teams` — done.** Ported from `page-teams.jsx` verbatim (stats row, leadership grid with bios, a
+consultants/trainers grid filterable via `team-filter-tabs`, CTA band linking to `routes.freeConsultation`).
+All content in `_data/teams-content.js` (`teamStats`, `teamLeadership`, `teamPeople`, `teamFilters`). All
+photos are `ImagePlaceholder` (no real headshots exist in the prototype). Already linked from the header's
+"More" mega-menu (both "Teams" and "Trainers" entries point at `routes.teams`, wired since the original
+Header port).
+
 **Known issue — duplicate content at `/consultancy` and `/free-consultation`.** Both routes currently render
 the exact same `ConsultancyPageContent` (free-consultation-page.html's content, ported at the user's explicit
 request onto the nav's "Consultancy" link). A second copy was then created directly at `/free-consultation`
@@ -215,7 +222,7 @@ resolved. Don't silently delete either route; ask first.
 **Pending** (in this order):
 1. The remaining website pages — each prototype `page-*.jsx` maps 1:1 to an `app/(website)/<route>/page.jsx`
    folder that already exists (empty) — see the folder tree above for the full list. (`about-us`,
-   `contact-us`, `login-signup`, `consultancy`/`free-consultation` are done, see above.)
+   `contact-us`, `teams`, `login-signup`, `consultancy`/`free-consultation` are done, see above.)
 2. `course-data.js` / `course-registry.js` → ES modules in `app/(website)/_data/`, rewiring
    `page-course-details.jsx`'s `window.ALL_SITE_COURSES` / `window.CourseData` reads to real imports.
 3. `(dashboard)` placeholder page + a pass-through `src/middleware.js`.
